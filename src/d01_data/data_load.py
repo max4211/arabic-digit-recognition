@@ -1,21 +1,14 @@
-import pandas as pd
-import numpy as np
-
 # Block sizes of each digit, half male half female
 TRAIN_BLOCK_SIZE = 660
 TEST_BLOCK_SIZE = 220
 
-# Relative filepath names
+# Relative filepath names (input)
 DATA_PATH = 'data/01_raw/'
 TEST_FILENAME = 'Test_Arabic_Digit.txt'
 TRAIN_FILENAME = 'Train_Arabic_Digit.txt'
 
+# Relative filepath names (output)
 INTERMEDIATE_PATH = 'data/02_intermediate/'
-
-# Test raw data read and print
-# df_test_lines = pd.read_csv(DATA_PATH + TEST_FILENAME, sep='\n')
-# df_test_list = np.split(df_test_lines, df_test_lines[df_test_lines.isnull().all(1)].index)
-# print(df_test_list)
 
 # Try to parse data with file opening
 empty_lines = 0
@@ -36,9 +29,6 @@ with open(DATA_PATH + TEST_FILENAME, "r") as test_file:
             f.close();
             f = open(cur_write_file, "w")
         last_digit = digit_num
-
-        # line_number += 1
-        # print(f"empty_lines: {empty_lines}\tcur_write_file: {cur_write_file}")
 
         # Check if digit is an empty line, this keeps track of digit separation 
         if len(line.strip()) == 0:
