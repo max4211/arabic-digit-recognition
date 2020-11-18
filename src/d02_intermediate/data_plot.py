@@ -70,8 +70,6 @@ def plot_mfcc_linear(df, coeffs, filename, save):
 def plot_mfcc_i_j(df, digit, i, j):
     # Plot MFCC Coefficient i vs coefficient j
     fig, ax = plt.subplots()
-    coeff_i = df[i]
-    coeff_j = df[j]
     marker_size = 0.5
     plt.scatter(x=df[i], y=df[j], s=marker_size, marker=random_marker())        
     ax.set_title(f"MFCC {i} vs {j} for digit {digit}")
@@ -125,9 +123,61 @@ df_test = pd.read_csv(test_file, delimiter=' ', header=None)
 
 # Relative path of training data
 TRAIN_PATH = 'data/02_intermediate/train_digits/train_0'
+WRITE_PATH = 'data/02_intermediate/single_person/train_0'
+
+def get_first_dataframe(digit):
+    """Get the first dataframe from a file"""
+    read_filename = f"{TRAIN_PATH}{digit}.txt"
+    write_filename = f"{WRITE_PATH}{digit}.txt"
+
+    f = open(write_filename, "w")
+    line_count = 0
+    # Open file and build out data
+    with open(read_filename, "r") as file:
+        for line in file:
+            if len(line.strip()) != 0:
+                f.write(line)
+                line_count += 1
+            elif line_count > 0:
+                f.close()
+                break
+
+    return pd.read_csv(write_filename, delimiter=' ', header=None)
+
+def plot_mfcc_linear_colorbar(df, digit, coeffs):
+    fig = plt.figure(figsize=(12, 5))
+
+    ax = fig.add_subplot(1, 2, 1)
+    mfcc_data= np.swapaxes(df_01, 0 ,1)
+    cmap = cm.coolwarm
+    norm = mcolors.Normalize(df.to_numpy().min(), df.to_numpy().max())
+    fig.colorbar(cm.ScalarMappable(norm=norm, cmap=cm.coolwarm), ax=ax)
+    ax.imshow(mfcc_data, interpolation='nearest', cmap=cmap, origin='lower')
+    ax.set_title(f"MFCC Visualization (Digit {digit})")
+    ax.set_ylabel(f"MFCC Coefficient")
+    ax.set_xlabel(f"Quefrency (ms)")
+
+    ax = fig.add_subplot(1, 2, 2)
+    for i in range(coeffs):
+        ax.plot(df[i], color=random_color(), marker=random_marker(), markersize=4, label=f"MFCC {i+1}")
+    ax.set_title(f"Frame vs. MFCC Magnitude (Digit {digit})")
+    ncols = 1 if (coeffs <= 5) else coeffs // 3
+    plt.legend(ncol=ncols)
+    ax.set_ylabel(f"Magnitude of MFCC")
+    ax.set_xlabel(f"Quefrency (ms)")
+
+    plt.show()
+
+# Get first dataframe for all digits and make subplots of mfcc and visualization
+COEFFS = 6
+for digit in range(10):
+    df = get_first_dataframe(digit=digit)
+    plot_mfcc_linear_colorbar(df=df, digit=digit, coeffs=COEFFS)
+
+# Over all digits, get dataframes and then plot mfcc linear and other in subplots
 
 def subplot_mfccs(digits, max_mfcc, fig_width, fig_height):
-    # Create subplots of multiple digits
+    """Create subplots of multiple digits"""
     dataframes = []
     for digit in digits:
         filename = f"{TRAIN_PATH}{digit}.txt"
@@ -159,4 +209,4 @@ def subplot_mfccs(digits, max_mfcc, fig_width, fig_height):
 digits = [0, 4, 9]
 max_mfcc = 4 #12
 fig_width, fig_height = 14, 4
-subplot_mfccs(digits=digits, max_mfcc=max_mfcc, fig_width=fig_width, fig_height=fig_height)
+# subplot_mfccs(digits=digits, max_mfcc=max_mfcc, fig_width=fig_width, fig_height=fig_height)
