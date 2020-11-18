@@ -158,6 +158,15 @@ def plot_mfcc_linear_colorbar(df, digit, coeffs):
     ax.set_xlabel(f"Quefrency (ms)")
 
     ax = fig.add_subplot(1, 2, 2)
+    # for i in range(coeffs):
+    #     print(f"i: {i}")
+    #     df = df[i]
+    #     size = df.shape[0]
+    #     x = np.arange(size) # range(size)
+    #     print(f"df: \n{df}")
+    #     print(f"x: {x}")
+    #     ax.scatter(x=x, y=df, color=random_color(), marker=random_marker(), s=1, label=f"MFCC {i+1}")
+
     for i in range(coeffs):
         ax.plot(df[i], color=random_color(), marker=random_marker(), markersize=4, label=f"MFCC {i+1}")
     ax.set_title(f"Frame vs. MFCC Magnitude (Digit {digit})")
