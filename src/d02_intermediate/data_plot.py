@@ -58,7 +58,8 @@ def plot_mfcc_linear(df, coeffs, filename, save):
     for i in range(coeffs):
         plt.plot(df[i], color=random_color(), marker=random_marker(), markersize=4, label=f"MFCC {i+1}")
     ax.set_title('Analysis Frame vs. Coefficient Magnitude')
-    plt.legend(ncol=3)
+    ncols = 1 if (coeffs <= 5) else coeffs // 3
+    plt.legend(ncol=ncols)
     plt.ylabel(f"Magnitude of MFCC")
     plt.xlabel(f"Quefrency (ms)")
     if (save):
@@ -75,10 +76,10 @@ df_00 = pd.read_csv(file_00, delimiter=' ', header=None)
 df_01 = pd.read_csv(file_01, delimiter=' ', header=None)
 
 # Construct mfcc colorbar from dataframes
-plot_mfcc_colorbar(df=df_00, filename=f"{INTERMEDIATE_PATH}00.png")
-plot_mfcc_colorbar(df=df_01, filename=f"{INTERMEDIATE_PATH}01.png")
+plot_mfcc_colorbar(df=df_00, filename=f"{INTERMEDIATE_PATH}colorbar_00.png")
+plot_mfcc_colorbar(df=df_01, filename=f"{INTERMEDIATE_PATH}colorbar_01.png")
 
 # Plot MFCC Coefficients as function of analysis window
-COEFFS = 13
-plot_mfcc_linear(df=df_00, coeffs=COEFFS, filename="", save=False)
-plot_mfcc_linear(df=df_01, coeffs=COEFFS, filename="", save=False)
+COEFFS = 4
+plot_mfcc_linear(df=df_00, coeffs=COEFFS, filename=f"{INTERMEDIATE_PATH}linear_00.png", save=True)
+plot_mfcc_linear(df=df_01, coeffs=COEFFS, filename=f"{INTERMEDIATE_PATH}linear_01.png", save=True)
