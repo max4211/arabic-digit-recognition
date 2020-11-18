@@ -17,9 +17,9 @@ def plot_mfcc_colorbar(df, filename):
     fig.colorbar(cm.ScalarMappable(norm=norm, cmap=cm.coolwarm), ax=ax)
     ax.imshow(mfcc_data, interpolation='nearest', cmap=cmap, origin='lower')
     ax.set_title('MFCC Visualization')
-    plt.savefig(filename)
     plt.ylabel(f"MFCC Coefficient")
     plt.xlabel(f"Quefrency (ms)")
+    plt.savefig(filename)
     plt.show()
 
 # Relative filepath names
