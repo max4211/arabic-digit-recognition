@@ -58,7 +58,7 @@ def analyze_cluster(matrix, labels, cluster_centers, n_clusters):
         sub_matrix = matrix[filter_arr]
 
         pi = len(sub_matrix) / len(matrix)
-        covariance = np.cov(sub_matrix)
+        covariance = np.cov(np.transpose(sub_matrix))
 
         pi_matrix.append(pi)
         covariance_matrix.append(covariance)
@@ -83,7 +83,7 @@ EXT = ".txt"
 
 # File read params
 DIGITS = 4
-MODEL_COEFFS = range(10)
+MODEL_COEFFS = range(13)
 PLOT_COEFFS = [0, 1]
 CLUSTERS = 3
 gauss_results = []
@@ -108,5 +108,48 @@ for digit in range(DIGITS):
 
     # custom_scatter_2D(matrix=matrix, labels=labels, cluster_centers=cluster_centers, n_clusters=n_clusters, digit=digit, coeffs=PLOT_COEFFS)
 
-    # Perform classification on some training data
-    
+
+# Test classification on a single digit
+VALIDATE_PATH = f"{DATA_PATH}single_person/train_0"
+
+digit = 3
+filename = f"{VALIDATE_PATH}{digit}{EXT}"
+df_validate = pd.read_csv(filename, skip_blank_lines=True, delimiter=' ', header=None)
+
+
+TOTAL_DIGITS = 10
+# Perform classification on some test data
+posterior_all = []
+
+for d in range(TOTAL_DIGITS):
+    """Iterate over all digits (possible classifications"""
+    posterior_digit = 1
+
+    for n, row in df_validate.iterrows():
+        """Iterate over all n frames of the sample"""
+        frames_n = row.to_numpy()
+
+        sum_m = 0
+        for result_m in gauss_results:
+            """Iterate over all results from gmm parameters"""
+            cov, pi, u = result_m.cov, result_m.pi, result_m.u   
+
+            for m in range(len(u)):
+                """Iterate over all m dimensions of mixture model"""
+                u_m = u[m]
+                cov_m = cov[m]
+                pi_m = pi[m]
+
+                y = multivariate_normal.pdf(x=frames_n, mean=u_m, cov=cov_m)
+                posterior_i = y * pi_m
+                sum_m += posterior_i
+
+            # end sum over all gauss components for digit
+            posterior_digit *= sum_m
+
+    # end product of all n frames
+    posterior_all.append(posterior_digit)
+
+print(f"posterior_all: {posterior_all}")
+classification = posterior_all.index(max(posterior_all))
+print(f"classification: {classification}")
