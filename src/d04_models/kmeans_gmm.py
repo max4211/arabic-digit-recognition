@@ -106,7 +106,7 @@ for digit in range(DIGITS):
     gauss = GaussParams(u=cluster_centers, pi=cluster_pi, cov=cluster_covariance)
     gauss_results.append(gauss)
 
-    # custom_scatter_2D(matrix=matrix, labels=labels, cluster_centers=cluster_centers, n_clusters=n_clusters, digit=digit, coeffs=PLOT_COEFFS)
+    custom_scatter_2D(matrix=matrix, labels=labels, cluster_centers=cluster_centers, n_clusters=n_clusters, digit=digit, coeffs=PLOT_COEFFS)
 
 for result in gauss_results:
     print(result)
