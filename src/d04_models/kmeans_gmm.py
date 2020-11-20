@@ -90,26 +90,31 @@ MODEL_COEFFS = range(USE_COEFFS)
 PLOT_COEFFS = [0, 1]
 CLUSTERS = 4
 
+# Generate gaussian models and results
 gauss_results = []
 for digit in range(DIGITS):
+    # Read in train file and parse as dataframe
     filename = f"{TRAIN_PATH}{digit}{EXT}"
     df = pd.read_csv(filename, skip_blank_lines=True, delimiter=' ', header=None)
     df.dropna(axis=0, inplace=True)
 
-    # kmeans params
+    # Filter dataframe down to only model coefficient columns
     df_filter = df.iloc[:, MODEL_COEFFS]
     matrix = df_filter.values
     n_clusters = CLUSTERS
 
+    # Apply kmeans on the matrix of values
     kmeans = KMeans(n_clusters=n_clusters, random_state=0)
     kmeans.fit(matrix)
     labels = kmeans.labels_
     cluster_centers = kmeans.cluster_centers_
 
+    # Record the GMM results (u, pi, and cov)
     cluster_covariance, cluster_pi = analyze_cluster(matrix=matrix, labels=labels, cluster_centers=cluster_centers, n_clusters=n_clusters)    
     gauss = GaussParams(u=cluster_centers, pi=cluster_pi, cov=cluster_covariance)
     gauss_results.append(gauss)
 
+    # Visualize the kmeans plot as scatter in 2D
     # custom_scatter_2D(matrix=matrix, labels=labels, cluster_centers=cluster_centers, n_clusters=n_clusters, digit=digit, coeffs=PLOT_COEFFS)
 
 def classify_dataframe(df, gauss_results, debug):
