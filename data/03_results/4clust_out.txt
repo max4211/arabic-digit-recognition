@@ -1,0 +1,7 @@
+1mfcc_4clust: 
+Digit            4.5000
+Accuracy (%)    33.1515
+Correct         14.6000
+Classified      44.1000
+Time (s)         6.2872
+dtype: float64
