@@ -1,0 +1,70 @@
+11-22 17:53:171mfcc_1clust: 
+Digit            1.50000
+Accuracy (%)    45.45475
+Correct          5.00000
+Classified      11.00000
+Time (s)         0.25825
+dtype: float64
+11-22 17:53:221mfcc_2clust: 
+Digit            1.50000
+Accuracy (%)    47.72725
+Correct          5.25000
+Classified      11.00000
+Time (s)         0.37550
+dtype: float64
+11-22 17:53:271mfcc_3clust: 
+Digit            1.50000
+Accuracy (%)    45.45475
+Correct          5.00000
+Classified      11.00000
+Time (s)         0.50475
+dtype: float64
+11-22 17:53:341mfcc_4clust: 
+Digit            1.5000
+Accuracy (%)    50.0000
+Correct          5.5000
+Classified      11.0000
+Time (s)         0.6835
+dtype: float64
+11-22 17:53:382mfcc_1clust: 
+Digit            1.50000
+Accuracy (%)    50.00025
+Correct          5.50000
+Classified      11.00000
+Time (s)         0.26075
+dtype: float64
+11-22 17:53:432mfcc_2clust: 
+Digit            1.50000
+Accuracy (%)    47.72725
+Correct          5.25000
+Classified      11.00000
+Time (s)         0.40950
+dtype: float64
+11-22 17:53:492mfcc_3clust: 
+Digit            1.50000
+Accuracy (%)    47.72725
+Correct          5.25000
+Classified      11.00000
+Time (s)         0.56725
+dtype: float64
+11-22 17:53:562mfcc_4clust: 
+Digit            1.50000
+Accuracy (%)    47.72725
+Correct          5.25000
+Classified      11.00000
+Time (s)         0.69850
+dtype: float64
+11-22 17:54:013mfcc_1clust: 
+Digit            1.50000
+Accuracy (%)    68.18150
+Correct          7.50000
+Classified      11.00000
+Time (s)         0.27925
+dtype: float64
+11-22 17:54:063mfcc_2clust: 
+Digit            1.50000
+Accuracy (%)    70.45425
+Correct          7.75000
+Classified      11.00000
+Time (s)         0.43025
+dtype: float64
