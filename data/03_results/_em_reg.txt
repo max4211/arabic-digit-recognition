@@ -1,0 +1,8 @@
+1mfcc_1clust	(11-23 12:32:26): 
+Digit            4.5000
+Accuracy (%)    34.3081
+Correct         15.1000
+Classified      44.1000
+Time (s)         6.6614
+dtype: float64
+
